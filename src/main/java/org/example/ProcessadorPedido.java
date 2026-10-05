@@ -1,92 +1,102 @@
 package org.example;
 
+import java.util.Locale;
+import java.util.Set;
+
 public class ProcessadorPedido {
 
+    private static final Set<String> CATEGORIAS_VALIDAS = Set.of("bronze", "prata", "ouro");
+    private static final double FRETE_PADRAO = 15.0;
+    private static final double LIMITE_FRETE_GRATIS = 200.0;
 
+    /**
+     * Normaliza e valida a categoria do cliente.
+     *
+     * @param categoria informada pelo usuário (ex.: " Ouro ")
+     * @return a categoria em minúsculas e sem espaços
+     * @throws IllegalArgumentException se a categoria for nula ou não for bronze, prata ou ouro
+     */
     public String validaCat(String categoria) {
         if (categoria == null) {
             throw new IllegalArgumentException("Categoria Inválida");
         }
 
-        String minusculo = categoria.toLowerCase().trim();
+        String normalizada = categoria.toLowerCase(Locale.ROOT).trim();
 
-        if (!minusculo.equals("bronze") && !minusculo.equals("prata") && !minusculo.equals("ouro")) {
+        if (!CATEGORIAS_VALIDAS.contains(normalizada)) {
             throw new IllegalArgumentException("Categoria Inválida");
         }
 
-        return minusculo;
+        return normalizada;
     }
 
+    /**
+     * Aplica o desconto da categoria sobre o valor da compra.
+     *
+     * @param categoria     bronze (sem desconto), prata (5%) ou ouro (10%)
+     * @param valorCompra   valor total do pedido antes do desconto
+     * @return o valor já com o desconto aplicado
+     * @throws IllegalArgumentException se a categoria ou o valor forem inválidos
+     */
     public Double CategoriaTeste(String categoria, Double valorCompra) {
-        
-    String minusculo = validaCat(categoria);
+        String categoriaNormalizada = validaCat(categoria);
 
         if (valorCompra == null || valorCompra <= 0) {
             throw new IllegalArgumentException("Valor de Compra Inválido");
         }
 
-        double valorTotal;
-
-        if (minusculo.equals("bronze")) {
-            valorTotal = valorCompra;
-        } else if (minusculo.equals("prata")) {
-            valorTotal = valorCompra - (valorCompra * 0.05);
-        } else {
-            valorTotal = valorCompra - (valorCompra * 0.10);
-        }
-
-        return valorTotal;
+        return switch (categoriaNormalizada) {
+            case "prata" -> valorCompra - (valorCompra * 0.05);
+            case "ouro" -> valorCompra - (valorCompra * 0.10);
+            default -> valorCompra;
+        };
     }
 
-
-
-    //Método para o calculo do frete
-    public double Calcfrete(double valorTotal){
-
-        // Se o valor da compra com o desconto for maior que 200 n tem frt
-        if (valorTotal > 200) {
-             return valorTotal;
-        }
-        // Se o valor da compra com o desconto for menor ou igual a 200 o frete valera   15 reais
-        else {
-            return valorTotal = valorTotal + 15;
-        }
-
-
-    }
-    //Método para calculo de pontos fidelidade
-    public int PontosFidelidade(Double valorTotal, String categoria){
-
-        //Sanitizção de dados
-        categoria = categoria.toLowerCase();
-        //Variavel que armazena qtd de pontos do cliente
-        int quantidadeDePontos = 0;
-
-        //Se a categira do cliente é ouro
-        if (categoria.equals("ouro")) {
-
-            if (valorTotal > 500) {
-
-                quantidadeDePontos +=250;
-
-            } else if (valorTotal > 300) {
-
-                quantidadeDePontos += 100;
-
-            }
-        //Se a categoria é diferente de Ouro
-        } else if (valorTotal > 300){
-
-            quantidadeDePontos += 100;
-
+    /**
+     * Calcula o valor do pedido já com o frete.
+     * Pedidos a partir de R$ 200,00 têm frete grátis; abaixo disso o frete é de R$ 15,00.
+     *
+     * @param valorTotal valor do pedido já com o desconto
+     * @return o valor final com frete incluído
+     * @throws IllegalArgumentException se o valor for menor ou igual a zero
+     */
+    public double Calcfrete(double valorTotal) {
+        if (valorTotal <= 0) {
+            throw new IllegalArgumentException("Valor do Pedido Inválido");
         }
 
-        //Soma os pontos com base no valor da compra
-        quantidadeDePontos += (int)Math.floor(valorTotal);
+        if (valorTotal >= LIMITE_FRETE_GRATIS) {
+            return valorTotal;
+        }
 
-
-
-        return quantidadeDePontos;
+        return valorTotal + FRETE_PADRAO;
     }
 
+    /**
+     * Calcula os pontos de fidelidade do cliente.
+     * Regras: 1 ponto por real gasto, mais 100 pontos se o valor passar de R$ 300,00
+     * e mais 150 pontos extras (250 no total) para categoria ouro acima de R$ 500,00.
+     *
+     * @param valorTotal valor final do pedido (com frete)
+     * @param categoria  bronze, prata ou ouro
+     * @return a quantidade de pontos acumulados
+     * @throws IllegalArgumentException se a categoria ou o valor forem inválidos
+     */
+    public int PontosFidelidade(Double valorTotal, String categoria) {
+        String categoriaNormalizada = validaCat(categoria);
+
+        if (valorTotal == null || valorTotal <= 0) {
+            throw new IllegalArgumentException("Valor do Pedido Inválido");
+        }
+
+        int pontos = (int) Math.floor(valorTotal);
+
+        if (categoriaNormalizada.equals("ouro") && valorTotal > 500) {
+            pontos += 250;
+        } else if (valorTotal > 300) {
+            pontos += 100;
+        }
+
+        return pontos;
+    }
 }
