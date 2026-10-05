@@ -2,19 +2,21 @@ package org.example;
 
 public class ProcessadorPedido {
 
+    //Método para o calculo do frete
     public double Calcfrete(double valorTotal){
 
+        // Se o valor da compra com o desconto for maior que 200, não terá frete
         if (valorTotal > 200) {
              return valorTotal;
         }
-
+        // Se o valor da compra com o desconto for menor ou igual á 200, o frete valerá 15 reais
         else {
             return valorTotal = valorTotal + 15;
         }
 
 
     }
-    //Metodo para calculo de pontos fidelidade
+    //Método para calculo de pontos fidelidade
     public int PontosFidelidade(Double valorTotal, String categoria){
 
         //Sanitizção de dados
