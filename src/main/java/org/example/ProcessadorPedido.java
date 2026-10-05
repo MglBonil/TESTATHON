@@ -47,7 +47,7 @@ public class ProcessadorPedido {
         if (valorTotal > 200) {
              return valorTotal;
         }
-        // Se o valor da compra com o desconto for menor ou igual a 200 o frete valera 15 reais
+        // Se o valor da compra com o desconto for menor ou igual a 200 o frete valera   15 reais
         else {
             return valorTotal = valorTotal + 15;
         }
