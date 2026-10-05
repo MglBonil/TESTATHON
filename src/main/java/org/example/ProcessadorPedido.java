@@ -43,11 +43,11 @@ public class ProcessadorPedido {
     //Método para o calculo do frete
     public double Calcfrete(double valorTotal){
 
-        // Se o valor da compra com o desconto for maior que 200, não terá frete
+        // Se o valor da compra com o desconto for maior que 200 n tem frt
         if (valorTotal > 200) {
              return valorTotal;
         }
-        // Se o valor da compra com o desconto for menor ou igual á 200, o frete valerá 15 reais
+        // Se o valor da compra com o desconto for menor ou igual a 200 o frete valera 15 reais
         else {
             return valorTotal = valorTotal + 15;
         }
