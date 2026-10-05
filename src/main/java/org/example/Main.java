@@ -92,7 +92,7 @@ public class Main {
                 return valor;
 
             } catch (NumberFormatException e) {
-                System.out.println("[ERRO] Valor inválido! Digite um número, ex: 150,90");
+                System.out.println("[ERRO] Valor inválido!");
             }
         }
     }
