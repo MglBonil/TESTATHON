@@ -1,6 +1,7 @@
 package org.example;
 
 public class ProcessadorPedido {
+
     public String validaCat(String categoria) {
         if (categoria == null) {
             throw new IllegalArgumentException("Categoria Inválida");
@@ -88,4 +89,3 @@ public class ProcessadorPedido {
     }
 
 }
-

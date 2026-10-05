@@ -1,10 +1,9 @@
+import org.example.ProcessadorPedido;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.jupiter.api.Test;
 
-import org.example.*;
+public class TesteFrete {
 
-public class TestePedido {
     @Test
     void Calcfrete(){
 
@@ -22,5 +21,8 @@ public class TestePedido {
         double teste4 = calc.Calcfrete(199.99);
         assertEquals(214.99, teste4);
 
+        assertEquals(204.0, calc.Calcfrete(calc.CategoriaTeste("ouro", 210.0)), 0.001);
+
     }
+
 }

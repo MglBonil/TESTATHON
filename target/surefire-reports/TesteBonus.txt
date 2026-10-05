@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+Test set: TesteBonus
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.056 s <<< FAILURE! -- in TesteBonus
+TesteBonus.deveMostrarDescontoCorreto -- Time elapsed: 0.028 s <<< ERROR!
+java.lang.IllegalArgumentException: Categoria Inválida
+	at org.example.ProcessadorPedido.validaCat(ProcessadorPedido.java:13)
+	at org.example.ProcessadorPedido.CategoriaTeste(ProcessadorPedido.java:21)
+	at TesteBonus.deveMostrarDescontoCorreto(TesteBonus.java:12)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
