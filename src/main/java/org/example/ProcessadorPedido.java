@@ -2,12 +2,13 @@ package org.example;
 
 public class ProcessadorPedido {
 
+
     public String validaCat(String categoria) {
         if (categoria == null) {
             throw new IllegalArgumentException("Categoria Inválida");
         }
 
-        String minusculo = categoria.toLowerCase();
+        String minusculo = categoria.toLowerCase().trim();
 
         if (!minusculo.equals("bronze") && !minusculo.equals("prata") && !minusculo.equals("ouro")) {
             throw new IllegalArgumentException("Categoria Inválida");
@@ -62,7 +63,7 @@ public class ProcessadorPedido {
         int quantidadeDePontos = 0;
 
         //Se a categira do cliente é ouro
-        if (categoria == "ouro") {
+        if (categoria.equals("ouro")) {
 
             if (valorTotal > 500) {
 
